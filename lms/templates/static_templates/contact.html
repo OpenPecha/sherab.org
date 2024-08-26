@@ -1,0 +1,16 @@
+<%page expression_filter="h"/>
+<%! from django.utils.translation import ugettext as _ %>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("Contact Us")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container about" id="static-pages-content">
+        <h1>
+            <%block name="pageheader">${page_header or _("Contact Us")}</%block>
+        </h1>
+        <p>
+            Email: <a href="mailto:hello@sherab.org">hello@sherab.org</a>
+        </p>
+    </section>
+</main>

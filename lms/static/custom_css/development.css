@@ -1,0 +1,361 @@
+#schools-partners-div {
+    padding: 25px 0;
+}
+
+.courses-container h2 {
+    font-family: inherit;
+    font-weight: bold;
+    color: #000;
+    font-size: 1.5rem;
+}
+
+.partner-slider {
+    padding: 0 70px;
+}
+
+.partner-slider .partner-item {
+    text-align: center;
+}
+
+.slick-initialized .slick-slide {
+    color: #FFF;
+    height: 200px;
+    margin: 0 15px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.partner-slider .slick-slide img {
+    width: 75%;
+    display: inline-block;
+}
+
+
+.slick-next,
+.slick-prev {
+    z-index: 5;
+}
+
+.slick-next {
+    right: 15px;
+}
+
+.slick-prev {
+    left: 15px;
+}
+
+.slick-next:before,
+.slick-prev:before {
+    color: #000;
+    font-size: 26px;
+}
+
+
+::-moz-selection {
+    background: #414c9b;
+    color: #fff;
+}
+
+::selection {
+    background: #414c9b;
+    color: #fff;
+}
+
+
+.img-responsive {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+
+.site-logo {
+    display: block;
+    margin: 0 auto;
+    padding: 2.5rem 0;
+    width: 200px;
+}
+
+#categories-div .events {
+    background: #e5e2e28c;
+    padding: 15px;
+}
+
+.home .highlighted-courses {
+    margin: 0;
+    padding: 0 25px;
+}
+
+.events__tabs {
+    display: flex;
+    flex-direction: column;
+    height: 3.75rem;
+    position: relative;
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .events__tabs {
+        height: auto;
+        flex-direction: row;
+    }
+}
+
+.events__tab {
+    background-color: #e2e2e2;
+    border: 1px solid #bbb;
+    color: #333;
+    cursor: pointer;
+    display: block;
+    font-weight: 700;
+    order: 2;
+    padding: 0.625rem;
+    position: absolute;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+}
+
+@media (min-width: 1024px) {
+    .events__tab {
+        box-shadow: none;
+        border-radius: 8px 8px 0 0;
+        box-shadow: inset 0 -1px 3px 0 rgba(0, 0, 0, 0.2);
+        margin-bottom: 0;
+        order: 0;
+        padding: 1.25rem 2.5rem;
+        position: static;
+        width: auto;
+    }
+}
+
+.events__tab:hover {
+    background-color: #414c9b;
+    color: #fff;
+}
+
+.events__tabs.-open .events__tab {
+    display: block;
+    position: relative;
+    z-index: 1000;
+}
+
+.events__tabs .events__tab {
+    color: #000;
+    text-transform: capitalize;
+    font-size: 22px;
+    border: none;
+    box-shadow: none;
+    margin-right: 15px;
+    background-color: #d3d3d3;
+    line-height: 28px;
+}
+
+.events__tabs .events__tab:hover,
+.events__tabs .events__tab:focus {
+    text-decoration: none;
+    color: #000;
+    background-color: #9c9c9c;
+}
+
+.events__tab.-active {
+    background-color: #9c9c9c;
+    order: 1;
+    position: relative;
+    z-index: 1;
+}
+
+@media (min-width: 1024px) {
+    .events__tab.-active {
+        order: 0;
+    }
+}
+
+.events__trigger {
+    color: #fff;
+    justify-content: center;
+    text-decoration: none;
+    position: absolute;
+    top: 0.8333333333rem;
+    right: 1.25rem;
+    z-index: 2000;
+}
+
+.events__trigger .fa-chevron-down {
+    display: block;
+}
+
+.events__tabs.-open .events__trigger .fa-chevron-down {
+    display: none;
+}
+
+.events__trigger .fa-chevron-up {
+    display: none;
+}
+
+.events__tabs.-open .events__trigger .fa-chevron-up {
+    display: block;
+}
+
+@media (min-width: 1024px) {
+    .events__trigger {
+        display: none;
+    }
+}
+
+.events__list {
+    border: solid 1px #9c9c9c;
+    display: none;
+}
+
+.events__list.-active {
+    display: block;
+    background: #9c9c9c;
+}
+
+.events__row {
+    align-items: stretch;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 1.25rem;
+}
+
+.events__row:nth-of-type(odd) {
+    background-color: #e2e2e2;
+}
+
+.events__row:hover {
+    background-color: #414c9b;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .events__row {
+        flex-direction: row;
+    }
+}
+
+.events__img {
+    margin-bottom: 1.25rem;
+    position: relative;
+    width: 50%;
+}
+
+.events__img:before {
+    background-color: rgba(65, 76, 155, 0.5);
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.events__img img {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .events__img {
+        flex: 0 0 15%;
+        margin-bottom: 0;
+        min-width: 182px;
+    }
+}
+
+.events__content {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .events__content {
+        padding-left: 1.25rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .events__content {
+        align-items: center;
+        flex: 1 0 auto;
+        flex-direction: row;
+    }
+}
+
+.events__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 0.625rem;
+}
+
+@media (min-width: 768px) {
+    .events__title {
+        margin-bottom: 0;
+    }
+}
+
+.events__address {
+    font-size: 0.85rem;
+    margin-bottom: 0.625rem;
+}
+
+@media (min-width: 768px) {
+    .events__address {
+        margin-bottom: 0;
+    }
+}
+
+.events__time {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.625rem;
+}
+
+@media (min-width: 768px) {
+    .events__time {
+        margin-bottom: 0;
+    }
+}
+
+.events__btn {
+    background-color: #f7ac37;
+    color: #414c9b;
+    display: inline-block;
+    padding: 0.4166666667rem 1.25rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+}
+
+.events__btn:hover {
+    background-color: #fff;
+    box-shadow: 0 0 1px #414c9b;
+}
+
+#partner-details h2.partner-name{
+  font-family: inherit !important;
+  padding: 25px 0;
+}
+.discovery-card .discovery-card-link:hover,
+.discovery-card .discovery-card-link:focus{
+  text-decoration: none !important;
+}
+
+#main-content .category-inner{
+    border-bottom: 1px solid #918c8c;
+    margin-bottom: 25px;
+}
+#main-content .category-inner .category-title{
+    font-family: inherit;
+    font-size: 15px;
+}
+#partner-details .partner-content, #partner-details .partner-content *{
+    font-family: inherit !important;
+}

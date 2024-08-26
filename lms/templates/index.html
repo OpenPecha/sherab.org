@@ -1,0 +1,183 @@
+<%page expression_filter="h"/>
+<%inherit file="main.html" />
+<%namespace name='static' file='static_content.html'/>
+<%!
+from django.db.models import Count
+from django.utils.translation import gettext as _
+from django.urls import reverse
+from course_partnerships.models import Partner, Category
+from openedx.core.djangolib.markup import HTML, Text
+from six import text_type
+from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+%>
+<%
+  partners = Partner.objects.all()
+  categories = Category.objects.filter(
+      show_on_homepage=True
+  ).annotate(
+      num_courses=Count('enhancedcourse')
+  ).filter(
+      num_courses__gt=0
+  )
+%>
+<link rel="stylesheet" href="${static.url('custom_css/slick-theme.css')}" />
+<link rel="stylesheet" href="${static.url('custom_css/slick.css')}" />
+<link rel="stylesheet" href="${static.url('custom_css/development.css')}" />
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="home">
+      <header>
+        <div class="outer-wrapper">
+          <div class="title">
+            <div class="heading-group">
+              % if homepage_overlay_html:
+                ${homepage_overlay_html | n, decode.utf8}
+              % else:
+                <%include file="index_overlay.html" />
+              % endif
+            </div>
+            % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
+              <div class="course-search">
+                <form method="get" action="/courses">
+                  <label><span class="sr">${_("Search for a course")}</span>
+                    <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
+                  </label>
+                  <button class="search-button" type="submit">
+                    <span class="icon fa fa-search" aria-hidden="true"></span><span class="sr">${_("Search")}</span>
+                  </button>
+                </form>
+              </div>
+            % endif
+
+          </div>
+
+          <%include file="index_promo_video.html" />
+        </div>
+
+      </header>
+      <section class="courses-container" id="schools-partners-div">
+        <h2>${_("Schools and Partners")}</h2>
+        <div class="wrapper">
+          <div class="partner-slider">
+              % for partner in partners:
+                  <div class="partner-item">
+                      <a href="${reverse('course_partnerships:partner-detail', args=[text_type(partner.slug)])}">
+                          <img src="${partner.logo.url}" alt="${partner.name} Logo">
+                      </a>
+                  </div>
+                % endfor
+            </div>
+        </div>
+      </section>
+      % if categories:
+        <section class="courses-container" id="categories-div">
+          <h2>${_("Course Categories")}</h2>
+          <section class="events"> 
+            <nav class="events__tabs">
+              % for index, category in enumerate(categories, start=1):
+                <a class="events__tab ${'-active' if index == 1 else ''}" data-tabcontent="tab-${index}" role="button">${category.name}</a>
+              % endfor 
+              <a class="events__trigger" href="#" role="button">
+                <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-up"></i>
+              </a>
+            </nav>
+            % for index, category in enumerate(categories, start=1):
+              <div id="tab-${index}" class="events__list ${'-active' if index == 1 else ''}">
+                <section class="courses-container">
+                  <section class="highlighted-courses">
+                      <section class="courses">
+                        <ul class="courses-listing">
+                          <%
+                              courses = CourseOverview.objects.filter(enhancedcourse__category=category)
+                          %>
+                          % for course in courses:
+                              <%
+                                  if course.enhancedcourse.center:
+                                      logo_url = course.enhancedcourse.center.logo.url
+                                  elif course.enhancedcourse.partner:
+                                      logo_url = course.enhancedcourse.partner.logo.url
+                              %>
+                            <li class="courses-listing-item">
+                              <article class="course" id="${course.id}" role="region" aria-label="${course.display_name_with_default}">
+                                <a href="${reverse('about_course', args=[text_type(course.id)])}">
+                                  <header class="course-image">
+                                    <div class="cover-image">
+                                      <img src="${course.course_image_url}" alt="${course.display_name_with_default} ${course.display_number_with_default}" />
+                                      <div class="learn-more" aria-hidden="true">${_("LEARN MORE")}</div>
+                                    </div>
+                                    <div class="partner-logo-wrapper">
+                                        <img src="${logo_url}" class="partner-logo" alt="${getattr(course.enhancedcourse.center or course.enhancedcourse.partner, 'name', None)}">
+                                    </div>
+                                  </header>
+                                  <div class="course-info" aria-hidden="true">
+                                    <h2 class="course-name">
+                                      <span class="course-organization">${course.display_org_with_default}</span>
+                                      <span class="course-code">${course.display_number_with_default}</span>
+                                      <span class="course-title">${course.display_name_with_default}</span>
+                                    </h2>
+                                    <%
+                                    if course.start is not None:
+                                        course_date_string = course.start.strftime('%Y-%m-%dT%H:%M:%S%z')
+                                    else:
+                                        course_date_string = ''
+                                    %>
+                                    % if course.advertised_start is not None:
+                                        <div class="course-date" aria-hidden="true">${_("Starts")}: ${course.advertised_start}</div>
+                                    % else:
+                                        <div class="course-date localized_datetime" aria-hidden="true" data-format="shortDate" data-datetime="${course_date_string}" data-language="${LANGUAGE_CODE}" data-string="${_("Starts: {date}")}"></div>
+                                    % endif
+                                  </div>
+                                  <div class="sr">
+                                    <ul>
+                                      <li>${course.display_org_with_default}</li>
+                                      <li>${course.display_number_with_default}</li>
+                                      % if course.advertised_start is not None:
+                                          <li>${_("Starts")}: <time itemprop="startDate">${course.advertised_start}</time></li>
+                                      % else:
+                                          <li>${_("Starts")}: <time class="localized_datetime" itemprop="startDate" data-format="shortDate" data-datetime="${course_date_string}" data-language="${LANGUAGE_CODE}"></time></li>
+                                      % endif
+                                    </ul>
+                                  </div>
+                                </a>
+                              </article>
+                            </li>
+                          % endfor
+                        </ul>
+                      </section>
+                  </section>
+                </section>
+              </div>
+            % endfor
+          </section><!-- .events -->
+        </section>
+      % endif
+    </section>
+</main>
+
+% if show_homepage_promo_video:
+  <section id="video-modal" class="modal home-page-video-modal video-modal">
+    <div class="inner-wrapper">
+      <iframe title="YouTube Video" width="640" height="360" src="//www.youtube.com/embed/${homepage_promo_video_youtube_id}?showinfo=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
+% endif
+
+<%block name="js_extra">
+   <script type="text/javascript">
+      $(window).load(function() {
+         if(getParameterByName('next')) {
+              $('#login').trigger("click");
+         }
+      })
+   </script>
+  <script src="${static.url('js/slick.min.js')}"></script>
+  <script src="${static.url('js/development.js')}"></script>
+</%block>
+
+% if show_signup_immediately is not UNDEFINED:
+  ## NOTE: This won't work in production, because anonymous views are cached, so it will
+  ## show either with or without this extra js for 3 minutes at a time.
+<script type="text/javascript">
+  $(window).load(function() {$('#signup_action').trigger("click");});
+</script>
+% endif

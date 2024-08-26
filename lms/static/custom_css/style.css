@@ -1,0 +1,11 @@
+#static-pages-content h2{font-family: inherit;font-weight: 600;font-size: 22px;color: #000;}
+#static-pages-content p, #static-pages-content ul li{line-height: 21px;}
+#static-pages-content ul li{padding-bottom: 15px;}
+#static-pages-content p+h2, #static-pages-content ul+h2{margin-top: 25px;}
+.wrapper-footer footer#footer-openedx .select-lang-button{background: none;box-shadow: none;text-shadow: none;font-family: inherit;letter-spacing: 0px;padding: 0 10px;border-radius: 3px;font-size: 17px;height: auto;}
+.courses-container .courses .course .course-image{position: relative;}   
+.courses-container .courses .course .course-image .partner-logo-wrapper{padding: 7px;position: absolute;bottom: -30px;left: 20px;background: #fff;border-radius: 3px;box-shadow: 1px 1px 2px 0 hsla(0, 0%, 66.7%, .5);}
+.courses-container .courses .course .course-image .partner-logo-wrapper img{height: 47px;width: 93.0625px;}
+.courses-container .courses .course .course-info .course-organization{padding-top: 35px;}
+.courses-container .courses .course .course-info .course-title{height: 50px;}
+.global-header .nav-links .secondary .dropdown-user-menu{z-index: 10000}

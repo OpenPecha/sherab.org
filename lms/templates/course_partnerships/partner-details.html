@@ -1,0 +1,121 @@
+<%page expression_filter="h"/>
+<%namespace name='static' file='../static_content.html'/>
+<%inherit file="../main.html" />
+<%!
+    from six import text_type
+    from django.urls import reverse
+    from django.utils.translation import ugettext as _
+    from openedx.core.djangolib.markup import clean_dangerous_html, HTML, Text
+    from openedx.core.djangoapps.content.course_overviews.models import CourseOverview
+%>
+<%block name="pagetitle">${partner.name}</%block>
+<link rel="stylesheet" href="${static.url('custom_css/slick-theme.css')}" />
+<link rel="stylesheet" href="${static.url('custom_css/slick.css')}" />
+<link rel="stylesheet" href="${static.url('custom_css/partners.css')}" />
+<link rel="stylesheet" href="${static.url('custom_css/development.css')}" />
+
+<main id="main-content" name="main-content" class="" tabindex="-1" aria-label="Content">
+    <div class="school-details" id="partner-details">
+        <div class="school-banner clearfix pt-4 container mw-lg">
+            <img src="${partner.banner.url}" alt="" class="school-banner-img">
+        </div>
+        <div class="container mw-lg">
+            <h2 class="partner-name">${partner.name}</h2>
+            <div class="partner-content">
+                ${clean_dangerous_html(partner.content)}
+            </div>
+        </div>
+        % if centers:
+            <div class="container mw-lg">
+                <h3 style="font-family: inherit;">${_("Centers")}</h3>
+                <div class="wrapper">
+                  <div class="partner-slider">
+                      % for center in centers:
+                          <div class="partner-item">
+                              <a href="${reverse('course_partnerships:center-detail', args=[text_type(partner.slug), text_type(center.slug)])}">
+                                  <img src="${center.logo.url}" alt="${center.name} Logo">
+                              </a>
+                          </div>
+                        % endfor
+                    </div>
+                </div>
+            </div>
+        % endif
+        <div class="container mw-lg">
+            <h3 style="font-family: inherit;">${_("Courses")}</h3>
+            % if categories:
+                % for category in categories:
+                    <%
+                        courses = CourseOverview.objects.filter(enhancedcourse__category=category, enhancedcourse__partner=partner)
+                    %>
+                    <div class="category-inner">
+                        <h2 class="category-title">${category.name}</h2>
+                        <div class="static-card-list d-flex m-xl-0 p-0 flex-wrap">
+                            % for course in courses:
+                                <%
+                                    if course.enhancedcourse.center:
+                                        logo_url = course.enhancedcourse.center.logo.url
+                                    elif course.enhancedcourse.partner:
+                                        logo_url = course.enhancedcourse.partner.logo.url
+                                %>
+                                <div class="discovery-card Verified and Audit col col-xl-3 mb-4 static-card-spacing" aria-label="${course.display_name_with_default}">
+                                    <a class="discovery-card-link" href="${reverse('about_course', args=[text_type(course.id)])}">
+                                        <div class="d-flex flex-column d-card-wrapper">
+                                            <div class="d-card-hero">
+                                                <img src="${course.course_image_url}" alt="${course.display_name_with_default}">
+                                            </div>
+                                            <div class="partner-logo-wrapper">
+                                                <img src="${logo_url}" class="partner-logo" alt="${getattr(course.enhancedcourse.center or course.enhancedcourse.partner, 'name', None)}">
+                                            </div>
+                                            <div class="d-card-body">
+                                                <h3 class="name-heading">
+                                                    <span width="230"><span>
+                                                    ${course.display_name_with_default}
+                                                </h3>
+                                                <p class="partner-name">${getattr(course.enhancedcourse.center or course.enhancedcourse.partner, 'name', None)}</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            % endfor
+                        </div>
+                    </div>
+                % endfor
+            % else:
+                <div class="static-card-list d-flex m-xl-0 p-0 flex-wrap">
+                    % for course in partner_courses:
+                        <%
+                            if course.enhancedcourse.center:
+                                logo_url = course.enhancedcourse.center.logo.url
+                            elif course.enhancedcourse.partner:
+                                logo_url = course.enhancedcourse.partner.logo.url
+                        %>
+                        <div class="discovery-card Verified and Audit col col-xl-3 mb-4 static-card-spacing" aria-label="${course.display_name_with_default}">
+                            <a class="discovery-card-link" href="${reverse('about_course', args=[text_type(course.id)])}">
+                                <div class="d-flex flex-column d-card-wrapper">
+                                    <div class="d-card-hero">
+                                        <img src="${course.course_image_url}" alt="${course.display_name_with_default}">
+                                    </div>
+                                    <div class="partner-logo-wrapper">
+                                        <img src="${logo_url}" class="partner-logo" alt="${getattr(course.enhancedcourse.center or course.enhancedcourse.partner, 'name', None)}">
+                                    </div>
+                                    <div class="d-card-body">
+                                        <h3 class="name-heading">
+                                            <span width="230"><span>
+                                            ${course.display_name_with_default}
+                                        </h3>
+                                        <p class="partner-name">${getattr(course.enhancedcourse.center or course.enhancedcourse.partner, 'name', None)}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    % endfor
+                </div>
+            % endif 
+        </div>
+    </div>
+</main>
+<%block name="js_extra">
+  <script src="${static.url('js/slick.min.js')}"></script>
+  <script src="${static.url('js/development.js')}"></script>
+</%block>

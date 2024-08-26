@@ -1,0 +1,20 @@
+
+<%page expression_filter="h"/>
+<%inherit file="base.html" />
+<%!
+from django.utils.translation import gettext as _
+from django.urls import reverse
+from django.conf import settings
+from openedx.core.djangolib.markup import Text
+%>
+<%block name="title">${_("Unauthorized Access")}</%block>
+
+<%block name="content">
+<style type="text/css">
+    .error-prompt{padding: 150px;background: #fff;text-align: center;font-weight: bold;font-size: 45px;}
+</style>
+    <article class="error-prompt">${_("Only admin of partner {} could access this course.".format(partner.name))}</article>
+</%block>
+
+
+
