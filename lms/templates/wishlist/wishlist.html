@@ -1,0 +1,137 @@
+<%page expression_filter="h"/>
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+<%!
+    import six
+    from six import text_type
+    from datetime import datetime, timedelta
+    from django.urls import reverse
+    from django.utils.translation import gettext as _
+    from opaque_keys.edx.keys import CourseKey
+    from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
+    from openedx.core.djangolib.js_utils import dump_js_escaped_json, js_escaped_string
+    from openedx.core.djangolib.markup import HTML, Text
+%>
+<%block name="pagetitle">${_("My Wishlist")}</%block>
+<%block name="bodyclass">view-wishlist is-authenticated</%block>
+<main id="main" aria-label="Content" tabindex="-1">
+    <div class="dashboard" id="dashboard-main">
+        <div class="main-container">
+            <div class="my-courses" id="my-courses">
+                <header class="wrapper-header-courses">
+                    <h2 class="header-courses">${_("My Wishlist")}</h2>
+                </header>
+                % if wishlisted_courses:
+                    <ul class="listing-courses">
+                        % for index, course in enumerate(wishlisted_courses):
+                            <%
+                                overview = course.course
+                            %>
+                            <li class="course-item">
+                                <div class="course-container" lang="en">
+                                    <article class="course" aria-labelledby="course-title-${overview.id}" id="course-card-${index}">
+                                        <section class="details" aria-labelledby="details-heading-${overview.id}">
+                                            <div class="wrapper-course-image" aria-hidden="true">
+                                                <a href="${reverse('about_course', args=[text_type(overview.id)])}" data-course-key="${overview.id}" class="cover course-target-link" tabindex="-1">
+                                                <img src="${overview.image_urls['small']}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=overview.number, course_name=overview.display_name_with_default)}">
+                                                </a>
+                                            </div>
+                                            <div class="wrapper-course-details">
+                                                <h3 class="course-title" id="course-title-${overview.id}">
+                                                    <a data-course-key="${overview.id}" href="${reverse('about_course', args=[text_type(overview.id)])}" class="course-target-link">${overview.display_name_with_default}</a>
+                                                </h3>
+                                                <div class="wrapper-course-info-actions">
+                                                    <div class="wrapper-course-info-row">
+                                                        <div class="course-info">
+                                                            <span class="info-university">${overview.display_org_with_default} - </span>
+                                                            <span class="info-course-id">${overview.display_number_with_default}</span>
+                                                            <%
+                                                                enrollment_date = overview.self_paced and enrollment and enrollment.created
+                                                                if overview.start_date_is_still_default:
+                                                                    container_string = _("Coming Soon")
+                                                                    course_date = None
+                                                                else:
+                                                                    format = 'shortDate'
+                                                                    dashboard_start_display = overview.dashboard_start_display
+                                                                    if overview.has_ended():
+                                                                        container_string = _("Ended - {date}")
+                                                                        course_date = overview.end.strftime("%b %d, %Y")
+                                                                    elif overview.has_started():
+                                                                        container_string = _("Started - {date}")
+                                                                        course_date = dashboard_start_display.strftime("%b %d, %Y")
+                                                                    elif overview.starts_within(days=5):
+                                                                        container_string = _("Starts - {date}")
+                                                                        course_date = dashboard_start_display.strftime("%b %d, %Y")
+                                                                    else:
+                                                                        container_string = _("Starts - {date}")
+                                                                        course_date = dashboard_start_display.strftime("%b %d, %Y")
+                                                                    endif
+                                                                endif
+                                                            %>
+                                                            <span class="info-date-block-container">
+                                                                <span class="info-date-block">${container_string.format(date=course_date)}</span>
+                                                            </span>
+                                                        </div>
+                                                        <div class="wrapper-course-actions">
+                                                            <div class="course-actions">
+                                                                <div class="wrapper-action-more" data-course-key="${overview.id}">
+                                                                    <button type="button" class="action action-more remove-from-wishlist" id="actions-dropdown-link-${index}" data-course-key="${overview.id}">
+                                                                        <span class="fa fa-trash" aria-hidden="true"></span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="continue-button">
+                                                        <a href="${reverse('about_course', args=[text_type(overview.id)])}" class="course-target-link enter-course " data-course-key="${overview.id}">${_("Open Course")}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </article>
+                                </div>
+                            </li>
+                        % endfor
+                    </ul>
+                % else:
+                    <div class="empty-dashboard-message">
+                        <p>${_("You have no courses in your wishlist.")}</p>
+                        <a class="btn btn-primary" href="${marketing_link('COURSES')}">${_("Explore courses")}</a>
+                    </div>
+                % endif
+            </div>
+        </div>
+        <div class="side-container" role="complementary" aria-label="messages"></div>
+    </div>
+</main>
+<div style="display: none;">
+    <form id="wishlist_form" method="post" data-remote="true" action="${reverse('wishlist:change-wishlist-status')}">
+        <fieldset class="enroll_fieldset">
+            <input name="course_id" id="course_id" type="hidden" value="">
+            <input name="wishlist_action" id="wishlist_action" type="hidden" value="remove">
+        </fieldset>
+        <div class="submit">
+            <input name="submit" type="submit">
+        </div>
+    </form>
+</div>
+<%block name="js_extra">
+    <script type="text/javascript">
+      (function() {
+        $(".remove-from-wishlist").click(function(event) {
+            event.preventDefault();
+            var courseId = $(this).data("course-key");
+            $("#course_id").val(courseId);
+            $("#wishlist_form").submit();
+        });
+        $('#wishlist_form').on('ajax:complete', function(event, xhr) {
+            var action = $("#wishlist_action").val();
+            if (xhr.status == 200) {
+                location.reload();
+            } else {
+                alert(xhr.responseText)
+            }
+        });
+      })(this)
+    </script>
+</%block>
