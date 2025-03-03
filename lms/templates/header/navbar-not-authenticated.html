@@ -1,0 +1,47 @@
+<%page expression_filter="h"/>
+
+<%namespace name='static' file='../static_content.html'/>
+<%namespace file='../main.html' import="login_query"/>
+
+<%!
+from django.conf import settings
+from django.urls import reverse
+from django.utils.translation import gettext as _
+
+from openedx.core.djangoapps.user_authn.toggles import should_redirect_to_authn_microfrontend
+%>
+
+<%
+  allows_login = not settings.FEATURES['DISABLE_LOGIN_BUTTON']
+  allow_public_account_creation = static.get_value(
+      'ALLOW_PUBLIC_ACCOUNT_CREATION', 
+      settings.FEATURES.get('ALLOW_PUBLIC_ACCOUNT_CREATION')
+  ) and settings.FEATURES.get('SHOW_REGISTRATION_LINKS', True)
+  should_redirect_to_authn_mfe = should_redirect_to_authn_microfrontend()
+%>
+
+<nav class="header-nav">
+  <div class="nav-left">
+    <div class="dropdown">
+      <button class="dropdown-btn">All Courses ▼</button>
+      <!-- <div class="dropdown-content">
+        <a href="/courses">${_("Browse Courses")}</a>
+      </div> -->
+    </div>
+  </div>
+
+  
+
+  <div class="nav-right">
+    % if allows_login:
+      <a class="btn login-btn" href="${settings.AUTHN_MICROFRONTEND_URL}/login${login_query() if should_redirect_to_authn_mfe else '/login' + login_query()}">${_("Login")}</a>
+      % if allow_public_account_creation:
+        <a class="btn register-btn" href="${settings.AUTHN_MICROFRONTEND_URL}/register${login_query() if should_redirect_to_authn_mfe else '/register' + login_query()}">${_("Register")}</a>
+      % endif
+    % endif
+  </div>
+</nav>
+
+<style>
+  
+</style>
