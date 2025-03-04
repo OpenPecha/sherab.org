@@ -26,7 +26,7 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
 <main id="main" aria-label="Content" tabindex="-1">
     <section class="home">
       <header>
-        <div class="outer-wrapper">
+        <div class="outer-wrapperr">
           <div class="title">
             <div class="heading-group">
               % if homepage_overlay_html:
@@ -35,18 +35,6 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
                 <%include file="index_overlay.html" />
               % endif
             </div>
-            % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
-              <div class="course-search">
-                <form method="get" action="/courses">
-                  <label><span class="sr">${_("Search for a course")}</span>
-                    <input class="search-input" name="search_query" type="text" placeholder="${_("Search for a course")}"></input>
-                  </label>
-                  <button class="search-button" type="submit">
-                    <span class="icon fa fa-search" aria-hidden="true"></span><span class="sr">${_("Search")}</span>
-                  </button>
-                </form>
-              </div>
-            % endif
 
           </div>
 
@@ -151,6 +139,32 @@ from openedx.core.djangoapps.content.course_overviews.models import CourseOvervi
           </section><!-- .events -->
         </section>
       % endif
+      <section class="testimonials">
+        <h2 class="testimonial-heading">What Our Client Saying...</h2>
+        <div class="testimonial-container">
+          <div class="testimonial-card">
+            <img class="testimonial-img" src="/mnt/data/testimonials.png" alt="Client Image">
+            <h3 class="testimonial-name">Helen Namika</h3>
+            <p class="testimonial-role">Teacher</p>
+            <div class="testimonial-rating">⭐⭐⭐⭐☆</div>
+            <p class="testimonial-text">Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.</p>
+          </div>
+          <div class="testimonial-card">
+            <img class="testimonial-img" src="/mnt/data/testimonials.png" alt="Client Image">
+            <h3 class="testimonial-name">Helen Namika</h3>
+            <p class="testimonial-role">Teacher</p>
+            <div class="testimonial-rating">⭐⭐⭐⭐☆</div>
+            <p class="testimonial-text">Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.</p>
+          </div>
+          <div class="testimonial-card">
+            <img class="testimonial-img" src="/mnt/data/testimonials.png" alt="Client Image">
+            <h3 class="testimonial-name">Helen Namika</h3>
+            <p class="testimonial-role">Teacher</p>
+            <div class="testimonial-rating">⭐⭐⭐⭐☆</div>
+            <p class="testimonial-text">Lorem Ipsum Is Simply Dummy Text Of The Printing And Typesetting Industry.</p>
+          </div>
+        </div>
+      </section>
     </section>
 </main>
 

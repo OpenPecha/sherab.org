@@ -10,7 +10,7 @@
 <% icp_license_info = getattr(settings, 'ICP_LICENSE_INFO', {})%>
 <%namespace name='static' file='static_content.html'/>
 
-  <div class="wrapper wrapper-footer">
+  <!-- <div class="wrapper wrapper-footer">
     <footer id="footer-openedx" class="grid-container"
       ## When rendering the footer through the branding API,
       ## the direction may not be set on the parent element,
@@ -39,7 +39,88 @@
         % endif
       </div>
     </footer>
-  </div>
+  </div> -->
+  <!-- <h2 class="heading">Frequently Asked Questions</h2>
+    <div class="accordion">
+        <div class="accordion-item">
+            <div class="accordion-title">Question 1</div>
+            <div class="accordion-content">Answer the frequently asked question in a simple sentence, a longish paragraph, or even in a list.</div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-title">Question 2</div>
+            <div class="accordion-content">Another answer content.</div>
+        </div>
+        <div class="accordion-item">
+            <div class="accordion-title">Question 3</div>
+            <div class="accordion-content">Additional content.</div>
+        </div>
+    </div> -->
+  <div class="footer-wrapper">
+    <footer class="footer-container"
+      ## When rendering the footer through the branding API,
+      ## the direction may not be set on the parent element,
+      ## so we set it here.
+      % if bidi:
+        dir=${bidi}
+      % endif
+    >
+        <div class="footer-section">
+            <img src='${static.url("images/newLogo.jpeg")}' alt="Company Logo" class="footer-logo">
+            <p class="footer-description">
+                when an unknown printer took galley of type and scrambled it to make psecimen bookt has.
+            </p>
+            <p class="footer-address"><strong>463 7th Ave, NY 10018,</strong></p>
+            <p class="footer-phone">+123 4596 456</p>
+            <p class="footer-email">
+                <i class="fa fa-envelope"></i>
+                <a href="mailto:hello@sherab.org">hello@sherab.org</a>
+            </p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Services</h4>
+            <ul class="footer-links">
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">Course Category</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">testimonial</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4 >Our Company</h4>
+            <ul class="footer-links">
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            % if context.get('include_language_selector', footer_language_selector_is_enabled()):
+            <%include file="${static.get_template_path('widgets/footer-language-selector.html')}"/>
+            % endif
+        </div>
+
+        <div class="footer-section search-section">
+            <input type="text" class="search-input" placeholder="Search">
+            <button class="search-button">Search</button>
+        </div>
+    </footer>
+
+    <div class="footer-bottom">
+        <p>© 2010-2024 demo.com. All rights reserved.</p>
+    </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const accordions = document.querySelectorAll(".accordion-title");
+      accordions.forEach(title => {
+          title.addEventListener("click", function () {
+              this.parentElement.classList.toggle("active");
+          });
+      });
+  });
+</script>
+
 % if include_dependencies:
   <%static:js group='base_vendor'/>
   <%static:css group='style-vendor'/>

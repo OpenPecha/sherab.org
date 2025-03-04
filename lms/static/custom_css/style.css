@@ -29,3 +29,342 @@
     .course-info header.course-profile .intro-inner-wrapper .intro{width: 100%;flex: 1;}
     .course-info header.course-profile .intro-inner-wrapper .media{flex: 1;padding: 20px;order: -1;width: 100%;}
 }
+
+.logo {
+    height: 88px;
+    width: 140px;
+}
+
+.global-header .header-logo a .logo {
+    height: 88px;
+    width: 140px;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .dropdown-btn {
+    padding: 8px 15px;
+    border: 1px solid black;
+    background: white;
+    cursor: pointer;
+    text-shadow: none;
+    color: #000000;
+  }
+
+  /* .nav-center .logo img {
+    height: 82px;
+    width: 91%;
+  } */
+
+  .btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-left: 10px;
+  }
+
+  .login-btn {
+    border: 1px solid black;
+    color: black;
+    background: white;
+  }
+
+  .register-btn {
+    background: #001F54;
+    color: white;
+  }
+
+
+.hero-section {
+    background-color: #E5F8FF;
+    padding: 50px 10%;
+    /* display: block; */
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 85%;
+}
+
+.hero-content h1 {
+    font-size: 36px;
+    font-weight: 600;
+    color: #000;
+}
+
+.hero-content h1 span {
+    font-weight: 800;
+}
+
+.hero-content p {
+    color: #333;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.search-box {
+    margin-top: 20px;
+    display: flex;
+    background: #fff;
+    border-radius: 50px;
+    padding: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    padding: 12px 15px;
+    flex: 1;
+    border-radius: 50px;
+    font-size: 16px;
+    color: #aaa;
+}
+
+.search-box button {
+    background-color: #F04F47;
+    color: white;
+    border: none;
+    padding: 2px 25px;
+    font-size: 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    bottom: 8px;
+}
+
+.popular-search {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.popular-search span {
+    font-weight: bold;
+}
+
+.hero-image {
+    max-width: 45%;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.dropdown .dropdown-btn:hover{
+    background: #ffffff;
+}
+
+.home>header .title {
+    width: 100%;
+    margin-left: 0%;
+}
+
+.home>header .title>.heading-group {
+    width: 100%;
+}
+
+.testimonials {
+    text-align: center;
+    padding: 50px 0;
+  }
+  .testimonial-heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .testimonial-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .testimonial-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+  }
+  .testimonial-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  .testimonial-name {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .testimonial-role {
+    font-size: 14px;
+    color: gray;
+  }
+  .testimonial-rating {
+    font-size: 16px;
+    color: orange;
+    margin: 10px 0;
+  }
+  .testimonial-text {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .footer-wrapper {
+    background-color: #06113C;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 40px 20px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    width: 22%;
+}
+
+.footer-logo {
+    max-width: 50px;
+}
+
+.footer-description {
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.footer-address,
+.footer-phone {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.footer-email {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.footer-email i {
+    margin-right: 5px;
+}
+
+.footer-email a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-section h4 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 5px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.search-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.search-input {
+    width: 250px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.search-button {
+    background-color: #E94E4E;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #d14040;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid white;
+    font-size: 14px;
+}
+
+.accordion {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+.accordion-item {
+    border-bottom: 1px solid #ddd;
+}
+.accordion-title {
+    background: #f1f1f1;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+.accordion-content {
+    display: none;
+    padding: 15px;
+    background: #fff;
+}
+.active .accordion-content {
+    display: block;
+}
+.heading {
+    font-weight: bold;
+    text-align: center;
+    font-size: 24px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
