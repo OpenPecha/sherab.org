@@ -30,13 +30,27 @@
     .course-info header.course-profile .intro-inner-wrapper .media{flex: 1;padding: 20px;order: -1;width: 100%;}
 }
 
-.logo {
+/* .logo {
     height: 88px;
     width: 140px;
+} */
+.cstm-searcls form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.cstm-searcls label, .cstm-searcls label input{
+    width: 100%;
+    margin: 0;
+}
+
+.global-header .header-logo a{
+    margin:0;
 }
 
 .global-header .header-logo a .logo {
-    height: 88px;
+    height: auto;
     width: 140px;
 }
 
@@ -44,8 +58,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    border-bottom: 1px solid #ccc;
+    padding: 20px 20px 10px;
+    /* border-bottom: 1px solid #ccc; */
   }
 
   .nav-left, .nav-right {
@@ -144,7 +158,7 @@
     border-radius: 50px;
     cursor: pointer;
     font-weight: 600;
-    position: absolute;
+    /* position: absolute; */
     right: 10px;
     top: 8px;
     bottom: 8px;
