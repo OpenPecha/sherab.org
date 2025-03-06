@@ -33,6 +33,7 @@ jobs:
         ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.STAGING_EC2_IP_ADDRESS }} << 'EOF'
           # Ensure Tutor is set up correctly
           TUTOR_ROOT=$(tutor config printroot)
+          echo $TUTOR_ROOT
 
           # Navigate to the theme directory using theme from GitHub secret
           cd "$TUTOR_ROOT/env/build/openedx/themes/${{ secrets.THEME_NAME }}"
